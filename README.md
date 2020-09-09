@@ -137,6 +137,23 @@ class UserController
 end
 ```
 
+### Check if a case is registered
+
+Something, you may want to check if a case is valid or not, and return error message if not.
+
+It can be accomplish by using `may_invoke_case?` method. See the following example:
+
+```rb
+class UserController
+  def refresh
+    helper = RefreshHelper.new(current_user)
+    invalid_needs = params[:needs].select{|need| !helper.may_invoke_case?(need) }
+    return render json: { invalid_needs: invalid_needs } if invalid_needs.any?
+    # ...
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
