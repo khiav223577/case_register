@@ -25,7 +25,7 @@ Or install it yourself as:
 
 ## Usage
 
-### Refactoring case statements
+### Refactor case statements
 
 Take the examples from this [article](http://bobnadler.com/articles/2010/08/02/refactoring-case-statements-in-ruby.html). Let you have a method like this:
 
@@ -49,7 +49,7 @@ output('Hi', :html)
 
 You can refactor it by using a hash table to map the input, like what the article says.
 
-Or use `CaseRegister` to register cases. Then, you are able to invoke the case directly without using switch statements. 
+Or use `CaseRegister` to register cases. Then, you are able to invoke the case directly without using switch-statements. 
 ```rb
 class MyFormatter
   include CaseRegister
@@ -67,7 +67,77 @@ MyFormatter.new('Hi').invoke_case(:html)
 # => "<p>Hi</p>"
 ``` 
 
+### Isolate methods
 
+Let you have an api that allow the frontend to pass params to determetine which information it wants.
+
+Since you have to use `send` to call the methods in user model dynamically, it will cause security issues if you do not use a whitelist to limit the methods it can access.   
+
+```rb
+class User < ApplicationRecord
+  def money_info
+    { value: money, rate: gain_money_rate }
+  end
+
+  def notification_info
+    { msg_count: new_msgs_count, last_recieved_at: last_recieved_at }
+  end
+end
+
+class UserController
+  METHOD_WHITE_LIST = [:money_info, :notification_info]
+ 
+  def refresh
+    result = params[:needs].slice(METHOD_WHITE_LIST).index_with{|method| current_user.send(method)  }
+    render json: result 
+  end
+end
+```
+
+You may use if-statements or switch-statments to map the input to the desired method. But you will find you repeat writing similiar things and it seems redundant.
+
+```rb
+class UserController
+  METHOD_WHITE_LIST = [:money_info, :notification_info]
+ 
+  def refresh
+    result = {}
+    result[:money_info] = current_user.money_info if params[:needs][:money_info]
+    result[:notification_info] = current_user.notification_info if params[:needs][:notification_info]
+    # ...
+
+    render json: result 
+  end
+end
+```
+
+In this case, you can use `CaseRegister` to DRYing up and isolate the methods to prevent unsafely calling `send`, which can access all the methods defined in the model.
+
+```rb
+class RefreshHelper
+  include CaseRegister
+
+  def initialize(user)
+    @user = user
+  end
+
+  register_case 'money_info' do
+    { value: @user.money, rate: @user.gain_money_rate }
+  end
+
+  register_case 'notification_info' do
+    { msg_count: @user.new_msgs_count, last_recieved_at: @user.last_recieved_at }
+  end
+end
+
+class UserController
+  def refresh
+    helper = RefreshHelper.new(current_user)
+    result = params[:needs].index_with{|need| helper.invoke_case(need) }
+    render json: result 
+  end
+end
+```
 
 ## Development
 
