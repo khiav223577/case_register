@@ -24,9 +24,9 @@ class InvokeCaseTest < Minitest::Test
 
   def test_invalid_case
     error = assert_raises(RuntimeError){ @fruit.invoke_case('unknown') }
-    assert_equal "Undefined case `unknown` for Fruit", error.message
+    assert_equal 'Undefined case `unknown` for Fruit', error.message
 
     error = assert_raises(RuntimeError){ @formatter.invoke_case('html3.7') }
-    assert_equal "Undefined case `html3.7` for Formatter", error.message
+    assert_equal 'Undefined case `html3.7` for Formatter', error.message
   end
 end

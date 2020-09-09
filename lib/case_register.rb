@@ -33,7 +33,7 @@ module CaseRegister
   def invoke_case(type, *args)
     method_name = self.class.case_register_get_method_name(type)
 
-    raise "Undefined case `#{type}` for #{self.class}" if method_name == nil
+    fail "Undefined case `#{type}` for #{self.class}" if method_name == nil
     return send(method_name, *args)
   end
 
