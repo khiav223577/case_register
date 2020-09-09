@@ -31,7 +31,10 @@ module CaseRegister
   end
 
   def load_registered_case(type, *args)
-    send(self.class.case_register_get_method_name(type), *args)
+    method_name = self.class.case_register_get_method_name(type)
+
+    raise "Undefined case `#{type}` for #{self.class}" if method_name == nil
+    return send(method_name, *args)
   end
 
   def may_load_registered_case?(type)
