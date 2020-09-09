@@ -30,3 +30,29 @@ def assert_frozen_error
 
   assert_raises(frozen_class){ yield }
 end
+
+class Fruit
+  include CaseRegister
+
+  attr_reader :sweetness
+
+  register_case 'watermelon' do
+    @sweetness = 30
+  end
+
+  register_case 'apple' do
+    @sweetness = 17
+  end
+end
+
+class Formatter
+  include CaseRegister
+
+  def initialize(text)
+    @text = text
+  end
+
+  register_case('pdf'){ "<pdf>#{@text}</pdf>" }
+  register_case('text'){ @text }
+  register_case('html'){ "<p>#{@text}</p>" }
+end
