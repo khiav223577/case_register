@@ -94,7 +94,7 @@ class UserController
 end
 ```
 
-You may use if-statements or switch-statments to call the desired method. But you will find you repeat writing similiar things and it seems redundant to have a same word appear 3 times on the same line.
+You may use if-statements or switch-statments to call the desired method. But you will find you repeat writing similiar things and it seems redundant to have a same word appearing 3 times on the same line.
 
 ```rb
 class UserController
