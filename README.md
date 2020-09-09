@@ -25,8 +25,11 @@ Or install it yourself as:
 
 ## Usage
 
-`include CaseRegister` in your class. Register some cases for it by calling `register_case`. Then you can use `invoke_case` method to call the registerd cases.
+1. `include CaseRegister` in your class. 
+2. Register some cases for it by calling `register_case`. 
+3. Then you can use `invoke_case` method to call the registerd cases.
 
+For example:
 ```rb
 class MyClass
   include CaseRegister
@@ -43,6 +46,7 @@ instance.invoke_case('Bar')
 # => bar
 ```
 
+## Use cases
 ### Refactor case statements
 
 Take the examples from this [article](http://bobnadler.com/articles/2010/08/02/refactoring-case-statements-in-ruby.html). Let you have a method like this:
