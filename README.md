@@ -25,6 +25,49 @@ Or install it yourself as:
 
 ## Usage
 
+### Refactoring case statements
+
+Take the examples from this [article](http://bobnadler.com/articles/2010/08/02/refactoring-case-statements-in-ruby.html). Let you have a method like this:
+
+```rb
+def output(data, format)
+  case format
+  when :html
+    return "<p>#{data}</p>"
+  when :text
+    return data
+  when :pdf
+    return "<pdf>#{data}</pdf>" # pseudocode -- obviously not valid PDF output
+  else
+    raise ArgumentError, "Invalid format (#{format})."
+  end
+end
+
+output('Hi', :html)
+# => "<p>Hi</p>"
+```
+
+You can refactor it by using a hash table to map the input, like what the article says.
+
+Or use `CaseRegister` to register cases. Then, you are able to invoke the case directly without using switch statements. 
+```rb
+class MyFormatter
+  include CaseRegister
+
+  def initialize(text)
+    @text = text
+  end
+
+  register_case(:pdf){ "<pdf>#{@text}</pdf>" }
+  register_case(:text){ @text }
+  register_case(:html){ "<p>#{@text}</p>" }
+end
+
+MyFormatter.new('Hi').invoke_case(:html)
+# => "<p>Hi</p>"
+``` 
+
+
 
 ## Development
 
