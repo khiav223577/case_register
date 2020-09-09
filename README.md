@@ -98,8 +98,6 @@ You may use if-statements or switch-statments to map the input to the desired me
 
 ```rb
 class UserController
-  METHOD_WHITE_LIST = [:money_info, :notification_info]
- 
   def refresh
     result = {}
     result[:money_info] = current_user.money_info if params[:needs][:money_info]
