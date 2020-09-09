@@ -69,7 +69,7 @@ MyFormatter.new('Hi').invoke_case(:html)
 
 ### Isolate methods
 
-Let you have an api that allow the frontend to pass params to determetine which information it wants.
+Let you have an api that allows the frontend to pass params to determetine which information it wants.
 
 Since you have to use `send` to call the methods in user model dynamically, it will cause security issues if you do not use a whitelist to limit the methods it can access.   
 
@@ -94,7 +94,7 @@ class UserController
 end
 ```
 
-You may use if-statements or switch-statments to map the input to the desired method. But you will find you repeat writing similiar things and it seems redundant.
+You may use if-statements or switch-statments to call the desired method. But you will find you repeat writing similiar things and it seems redundant to have a same word appear 3 times on the same line.
 
 ```rb
 class UserController
