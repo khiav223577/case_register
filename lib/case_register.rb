@@ -20,7 +20,7 @@ module CaseRegister
         define_method(:case_register_get_method_name){|type| get_method_name[type] }
         define_method(:case_register_gen_method_name){|type| gen_method_name[type] }
 
-        def register_type(type, &block)
+        def register_case(type, &block)
           method_name = case_register_gen_method_name(type)
           define_method(method_name, &block)
           private(method_name)

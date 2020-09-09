@@ -30,3 +30,17 @@ def assert_frozen_error
 
   assert_raises(frozen_class){ yield }
 end
+
+class Fruit
+  include CaseRegister
+
+  attr_reader :sweetness
+
+  register_case 'watermelon' do
+    @sweetness = 30
+  end
+
+  register_case 'apple' do
+    @sweetness = 17
+  end
+end
