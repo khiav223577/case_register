@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['khiav reoy']
   spec.email         = ['mrtmrt15xn@yahoo.com.tw']
 
-  spec.summary       = 'Provide a degisn pattern to manage large switch statements by mapping it to methods.'
-  spec.description   = 'Provide a degisn pattern to manage large switch statements by mapping it to methods.'
+  spec.summary       = 'Provide a design pattern to manage large switch statements by mapping it to methods.'
+  spec.description   = 'Provide a design pattern to manage large switch statements by mapping it to methods.'
   spec.homepage      = 'https://github.com/khiav223577/case_register'
   spec.license       = 'MIT'
 
