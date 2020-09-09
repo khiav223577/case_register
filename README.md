@@ -154,6 +154,62 @@ class UserController
 end
 ```
 
+## Code Reuse
+
+In case-statement, it is impossible to exec the code in other cases since there is no way to jump out of current case. We will have to move the code out and define a method, then call it in cases.
+
+With `CaseRegister`, every case is a method, We can call it directly in one case. 
+
+For example, if we want to define three kinds of skill: `Shock`, `Flame Shock` and `Thunder Shock`. All of them are `Shock`, the difference is that the `Flame Shock` is a `Shock` with fire effect and the `Thunder Shock` is a `Shock` with thunder effect. We would like to reuse the code in `Shock` and set fire effect for `Flame Shock` (Like Inheritance). In this case, we can reuse the code in `Shock` by calling `invoke_case('Shock')`.
+
+```rb
+class Skill
+  include CaseRegister
+
+  register_case 'Shock' do
+    @debuff = Debuff::Shock.new(duration: 5.seconds)
+  end
+
+  register_case 'Flame Shock' do
+    invoke_case('Shock')
+
+    @atk_effect.set_fire_effect!
+  end
+
+  register_case 'Thunder Shock' do
+    invoke_case('Shock')
+    
+    @atk_effect.set_thunder_effect!
+  end
+end
+```
+
+### Fallthrough
+
+Case-statement in ruby doesn't have fallthrough behavior. There are many other ways you can do to simulate fallthrough behavior.
+
+`CaseRegister` provides another way to simulate the behavior.
+
+```js
+switch(type){
+  case 'A': console.log("a"); break;
+  case 'B': console.log("b"); // fallthrough
+  case 'C': console.log("c"); // fallthrough
+  case 'D': console.log("d"); break;
+}
+```
+
+```rb
+class MyClass
+  include CaseRegister
+
+  register_case('A'){ p 'a' }
+  register_case('B'){ p 'b'; invoke_case('C') }
+  register_case('C'){ p 'c'; invoke_case('D') }
+  register_case('D'){ p 'd' }
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
