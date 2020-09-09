@@ -25,6 +25,24 @@ Or install it yourself as:
 
 ## Usage
 
+`include CaseRegister` in your class. Register some cases for it by calling `register_case`. Then you can use `invoke_case` method to call the registerd cases.
+
+```rb
+class MyClass
+  include CaseRegister
+
+  register_case('Foo'){ p 'foo' }
+  register_case('Bar'){ p 'bar' }
+end
+
+instance = MyClass.new
+instance.invoke_case('Foo')
+# => foo
+
+instance.invoke_case('Bar')
+# => bar
+```
+
 ### Refactor case statements
 
 Take the examples from this [article](http://bobnadler.com/articles/2010/08/02/refactoring-case-statements-in-ruby.html). Let you have a method like this:
