@@ -44,3 +44,15 @@ class Fruit
     @sweetness = 17
   end
 end
+
+class Formatter
+  include CaseRegister
+
+  def initialize(text)
+    @text = text
+  end
+
+  register_case('pdf'){ "<pdf>#{@text}</pdf>" }
+  register_case('text'){ @text }
+  register_case('html'){ "<p>#{@text}</p>" }
+end
