@@ -139,7 +139,7 @@ end
 
 ### Check if a case is registered
 
-Something, you may want to check if a case is valid or not, and return error message if not.
+Sometimes, you may want to check if a case is valid or not, and return error message if not.
 
 It can be accomplish by using `may_invoke_case?` method. See the following example:
 
