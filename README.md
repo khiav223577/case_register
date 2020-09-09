@@ -25,11 +25,10 @@ Or install it yourself as:
 
 ## Usage
 
-1. `include CaseRegister` in your class. 
-2. Register some cases for it by calling `register_case`. 
-3. Then you can use `invoke_case` method to call the registerd cases.
+### Define your cases
 
-For example:
+First, `include CaseRegister` in your class. Then register some cases for it by calling `register_case`. 
+
 ```rb
 class MyClass
   include CaseRegister
@@ -39,11 +38,30 @@ class MyClass
 end
 
 instance = MyClass.new
+```
+
+### invoke the case
+
+Use `invoke_case` method to call the registerd cases.
+
+```rb
 instance.invoke_case('Foo')
 # => foo
 
 instance.invoke_case('Bar')
 # => bar
+```
+
+### Check available cases
+
+Use `may_invoke_case` to check if a case exists.
+
+```rb
+instance.may_invoke_case?('Bar')
+# => true
+
+instance.may_invoke_case?('FooBar')
+# => false
 ```
 
 ## Use cases
@@ -159,7 +177,7 @@ class UserController
 end
 ```
 
-### Check if a case is registered
+### Check invalid cases
 
 Sometimes, you may want to check if a case is valid or not, and return error message if not.
 
