@@ -2,27 +2,31 @@ require 'simplecov'
 SimpleCov.start
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'gem_template'
-require 'active_record'
+
+require 'case_register'
 
 require 'minitest/autorun'
 
-ActiveRecord::Base.establish_connection(
-  'adapter'  => 'sqlite3',
-  'database' => ':memory:',
-)
-require 'lib/seeds'
+def assert_before_and_after(test_proc, subject_proc, expected_value)
+  before = test_proc.call
+  subject_proc.call
+  after = test_proc.call
+  assert_equal expected_value, :before => before, :after => after
+end
 
-def assert_queries(expected_count, event_key = 'sql.active_record')
-  sqls = []
-  subscriber = ActiveSupport::Notifications.subscribe(event_key) do |_, _, _, _, payload|
-    sqls << "  ● #{payload[:sql]}" if payload[:sql] !~ /\A(?:BEGIN TRANSACTION|COMMIT TRANSACTION|BEGIN|COMMIT)\z/i
-  end
-  yield
-  if expected_count != sqls.size # show all sql queries if query count doesn't equal to expected count.
-    assert_equal "expect #{expected_count} queries, but have #{sqls.size}", "\n#{sqls.join("\n").tr('"', "'")}\n"
-  end
-  assert_equal expected_count, sqls.size
-ensure
-  ActiveSupport::Notifications.unsubscribe(subscriber)
+def expect_to_receive(obj, method, expected_args, return_value, &block)
+  obj.stub(method, proc{|args|
+    assert_equal(expected_args, args)
+    next return_value
+  }, &block)
+end
+
+def assert_frozen_error
+  frozen_class = case
+                 when RUBY_VERSION < '2'   ; TypeError
+                 when RUBY_VERSION < '2.5' ; RuntimeError
+                 else                      ; FrozenError
+                 end
+
+  assert_raises(frozen_class){ yield }
 end
