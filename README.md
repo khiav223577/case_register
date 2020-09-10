@@ -35,8 +35,8 @@ First, `include CaseRegister` in your class. Then register some cases for it by 
 class MyClass
   include CaseRegister
 
-  register_case('Foo'){ p 'foo' }
-  register_case('Bar'){ p 'bar' }
+  register_case('Foo'){ 'foo' }
+  register_case('Bar'){ 'bar' }
 end
 
 instance = MyClass.new
@@ -52,6 +52,9 @@ instance.invoke_case('Foo')
 
 instance.invoke_case('Bar')
 # => bar
+
+instance.invoke_case('FooBar')
+# => RuntimeError (Undefined case `FooBar` for MyClass)
 ```
 
 ### Check available cases
@@ -59,6 +62,9 @@ instance.invoke_case('Bar')
 Use `may_invoke_case` to check if a case exists.
 
 ```rb
+instance.may_invoke_case?('Foo')
+# => true
+
 instance.may_invoke_case?('Bar')
 # => true
 
