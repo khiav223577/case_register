@@ -128,7 +128,7 @@ class User < ApplicationRecord
   end
 
   def notification_info
-    { msg_count: new_msgs_count, last_recieved_at: last_recieved_at }
+    { msg_count: new_msgs_count, last_received_at: last_received_at }
   end
 end
 
@@ -172,7 +172,7 @@ class RefreshHelper
   end
 
   register_case 'notification_info' do
-    { msg_count: @user.new_msgs_count, last_recieved_at: @user.last_recieved_at }
+    { msg_count: @user.new_msgs_count, last_received_at: @user.last_received_at }
   end
 end
 
