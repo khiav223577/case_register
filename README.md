@@ -11,6 +11,20 @@ Provide a design pattern to manage switch statements by mapping it to methods wh
 ## Supports
 - Ruby 1.8 ~ 2.7
 
+## Table of contents
+
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Use cases](#use-cases)
+   - [Refactor case statements](#refactor-case-statements)
+   - [Fallthrough](#fallthrough)
+   - [Code Reuse](#code-reuse)
+   - [Isolate methods](#isolate-methods)
+   - [Check invalid cases](#check-invalid-cases)
+3. [Development](#development)
+4. [Contributing](#contributing)
+5. [License](#license)
+
 ## Installation
 
 ```ruby
