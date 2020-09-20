@@ -21,6 +21,7 @@ Provide a design pattern to manage switch statements by mapping each case to a m
    - [Code Reuse](#code-reuse)
    - [Isolate methods](#isolate-methods)
    - [Check invalid cases](#check-invalid-cases)
+   - [Command-line Games](#command-line-games)
 3. [Development](#development)
 4. [Contributing](#contributing)
 5. [License](#license)
@@ -274,6 +275,96 @@ class UserController
     invalid_needs = params[:needs].select{|need| !helper.may_invoke_case?(need) }
     return render json: { invalid_needs: invalid_needs } if invalid_needs.any?
     # ...
+  end
+end
+```
+
+### Command-line Games
+
+CaseRegister is very suitable for creating a command-line games. It will help you get rid of large switch statements.
+
+The following code is a little maze game, enjoy it :)
+```rb
+require 'case_register'
+class MazeGame
+  include CaseRegister
+
+  def initialize
+    @maze = <<~MAZE
+      101111111111111111
+      101010000000000101
+      100010111110010001
+      101010010010111101
+      111001011010100001
+      101100001000101111
+      100011101111100001
+      101000000000000101
+      1111111111111111A1
+    MAZE
+
+    @height = @maze.count("\n")
+    @width = @maze.size / @height
+  end
+
+  register_case('show') do
+    puts '------ Maze ------'
+    puts @maze
+    puts 'Enter your command: (move up / move down / move right / move left / quit)'
+  end
+
+  register_case('move up') do
+    index = @maze.index('A')
+    puts 'cannot move up' if not move!(index, index - @width)
+    after_move
+  end
+
+  register_case('move down') do
+    index = @maze.index('A')
+    puts 'cannot move down' if not move!(index, index + @width)
+    after_move
+  end
+
+  register_case('move left') do
+    index = @maze.index('A')
+    puts 'cannot move left' if not move!(index, index - 1)
+    after_move
+  end
+
+  register_case('move right') do
+    index = @maze.index('A')
+    puts 'cannot move right' if not move!(index, index + 1)
+    after_move
+  end
+
+  register_case('cheat') do
+    index = @maze.index('A')
+    move!(index, 20)
+    after_move
+  end
+
+  private
+
+  def move!(index, new_index)
+    return false if new_index < 0
+    return false if @maze[new_index] != '0'
+
+    @maze[index], @maze[new_index] = @maze[new_index], @maze[index]
+    return true
+  end
+
+  def after_move
+    invoke_case('show')
+    puts "You finish the maze!" if @maze.index('A') == 1
+  end
+end
+
+game = MazeGame.new
+game.invoke_case('show')
+while (input = gets.chomp) != 'quit'
+  if game.may_invoke_case?(input)
+    game.invoke_case(input)
+  else
+    puts "invalid action: #{input}"
   end
 end
 ```
