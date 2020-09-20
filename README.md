@@ -286,6 +286,7 @@ CaseRegister is very suitable for creating a command-line games. It will help yo
 The following code is a little maze game, enjoy it :)
 ```rb
 require 'case_register'
+
 class MazeGame
   include CaseRegister
 
@@ -313,42 +314,33 @@ class MazeGame
   end
 
   register_case('move up') do
-    index = @maze.index('A')
-    puts 'cannot move up' if not move!(index, index - @width)
-    after_move
+    puts 'cannot move up' if not move_to!(current_position - @width)
   end
 
   register_case('move down') do
-    index = @maze.index('A')
-    puts 'cannot move down' if not move!(index, index + @width)
-    after_move
+    puts 'cannot move down' if not move_to!(current_position + @width)
   end
 
   register_case('move left') do
-    index = @maze.index('A')
-    puts 'cannot move left' if not move!(index, index - 1)
-    after_move
+    puts 'cannot move left' if not move_to!(current_position - 1)
   end
 
   register_case('move right') do
-    index = @maze.index('A')
-    puts 'cannot move right' if not move!(index, index + 1)
-    after_move
+    puts 'cannot move right' if not move_to!(current_position + 1)
   end
 
   register_case('cheat') do
-    index = @maze.index('A')
-    move!(index, 20)
-    after_move
+    move_to!(20)
   end
 
   private
 
-  def move!(index, new_index)
+  def move_to!(new_index)
     return false if new_index < 0
     return false if @maze[new_index] != '0'
 
-    @maze[index], @maze[new_index] = @maze[new_index], @maze[index]
+    @maze[current_position], @maze[new_index] = @maze[new_index], @maze[current_position]
+    after_move
     return true
   end
 
@@ -356,17 +348,25 @@ class MazeGame
     invoke_case('show')
     puts "You finish the maze!" if @maze.index('A') == 1
   end
-end
 
-game = MazeGame.new
-game.invoke_case('show')
-while (input = gets.chomp) != 'quit'
-  if game.may_invoke_case?(input)
-    game.invoke_case(input)
-  else
-    puts "invalid action: #{input}"
+  def current_position
+    @maze.index('A')
   end
 end
+
+def start_game!
+  game = MazeGame.new
+  game.invoke_case('show')
+  while (input = gets.chomp) != 'quit'
+    if game.may_invoke_case?(input)
+      game.invoke_case(input)
+    else
+      puts "invalid action: #{input}"
+    end
+  end
+end
+
+start_game!
 ```
 
 ## Development
