@@ -6,7 +6,7 @@
 [![Code Climate](https://codeclimate.com/github/khiav223577/case_register/badges/gpa.svg)](https://codeclimate.com/github/khiav223577/case_register)
 [![Test Coverage](https://codeclimate.com/github/khiav223577/case_register/badges/coverage.svg)](https://codeclimate.com/github/khiav223577/case_register/coverage)
 
-Provide a design pattern to manage switch statements by mapping it to methods which are dynamically defined in advance.
+Provide a design pattern to manage switch statements by mapping each case to a method which is dynamically defined in advance.
 
 ## Supports
 - Ruby 1.8 ~ 2.7

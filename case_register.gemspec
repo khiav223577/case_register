@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['khiav reoy']
   spec.email         = ['mrtmrt15xn@yahoo.com.tw']
 
-  spec.summary       = 'Provide a design pattern to manage switch statements by mapping it to methods which are dynamically defined in advance.'
-  spec.description   = 'Provide a design pattern to manage switch statements by mapping it to methods which are dynamically defined in advance.'
+  spec.summary       = 'Provide a design pattern to manage switch statements by mapping each case to a method which is dynamically defined in advance.'
+  spec.description   = 'Provide a design pattern to manage switch statements by mapping each case to a method which is dynamically defined in advance.'
   spec.homepage      = 'https://github.com/khiav223577/case_register'
   spec.license       = 'MIT'
 
