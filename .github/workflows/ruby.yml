@@ -25,9 +25,9 @@ jobs:
           - 2.7
         gemfile:
           - Gemfile
-        include:
-          - gemfile: ruby_1_8_7.gemfile
-            ruby: 1.8.7
+#        include:
+#          - gemfile: ruby_1_8_7.gemfile # github actions doesn't support ruby 1.8.7 now.
+#            ruby: 1.8.7
     env:
       BUNDLE_GEMFILE: "gemfiles/${{ matrix.gemfile }}"
 
