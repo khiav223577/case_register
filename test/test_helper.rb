@@ -1,10 +1,9 @@
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start 'test_frameworks'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
 require 'case_register'
-
 require 'minitest/autorun'
 
 def assert_before_and_after(test_proc, subject_proc, expected_value)
