@@ -1,7 +1,7 @@
 # CaseRegister
 
 [![Gem Version](https://img.shields.io/gem/v/case_register.svg?style=flat)](http://rubygems.org/gems/case_register)
-[![Build Status](https://travis-ci.com/khiav223577/case_register/workflows/Ruby/badge.svg)](https://github.com/khiav223577/case_register/actions)
+[![Build Status](https://github.com/khiav223577/case_register/workflows/Ruby/badge.svg)](https://github.com/khiav223577/case_register/actions)
 [![RubyGems](http://img.shields.io/gem/dt/case_register.svg?style=flat)](http://rubygems.org/gems/case_register)
 [![Code Climate](https://codeclimate.com/github/khiav223577/case_register/badges/gpa.svg)](https://codeclimate.com/github/khiav223577/case_register)
 [![Test Coverage](https://codeclimate.com/github/khiav223577/case_register/badges/coverage.svg)](https://codeclimate.com/github/khiav223577/case_register/coverage)
