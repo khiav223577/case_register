@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'case_register'
   spec.version       = CaseRegister::VERSION
   spec.authors       = ['khiav reoy']
-  spec.email         = ['mrtmrt15xn@yahoo.com.tw']
+  spec.email         = ['khiav223577@gmail.com']
 
   spec.summary       = 'Provide a design pattern to manage switch statements by mapping each case to a method which is dynamically defined in advance.'
   spec.description   = 'Provide a design pattern to manage switch statements by mapping each case to a method which is dynamically defined in advance.'
